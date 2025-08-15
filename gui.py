@@ -31,6 +31,10 @@ class HabitQuestApp:
 
     #Start Screen
     def setup_start_screen(self) -> None:
+        self.start_frame.grid_rowconfigure(0, weight=1)
+        self.start_frame.grid_columnconfigure(0, weight=1)
+        container = tk.Frame(self.start_frame)
+        container.place(relx=0.5, rely=0.5, anchor="center")
         label = tk.Label(self.start_frame, text="🎯 Habit Quest", font=("Arial", 24))
         label.pack(pady=20)
         stats_button = tk.Button(self.start_frame, text="Game Stats", command=self.show_stats)
@@ -51,6 +55,10 @@ class HabitQuestApp:
 
     #Game Screen
     def setup_game_screen(self) -> None:
+        self.game_frame.grid_rowconfigure(0, weight=1)
+        self.game_frame.grid_columnconfigure(0, weight=1)
+        container = tk.Frame(self.game_frame)
+        container.place(relx=0.5, rely=0.5, anchor="center")
         tk.Label(self.game_frame, text="Your Daily Habits", font=("Arial", 18)).pack(pady=10)
         self.habit_checkbuttons = []
         self.habit_vars = []
@@ -85,14 +93,30 @@ class HabitQuestApp:
                 earned_xp += 10
                 self.habits[i].complete()
         self.player.add_xp(earned_xp)
+
         self.update_game_stats()
         self.show_frame(self.end_frame)
 
         #Saved earned XP for display
         self.daily_xp_earned = earned_xp
+        self.end_stats_label.config(
+            text=(
+                f"XP earned today: {self.daily_xp_earned}\n"
+                f"Total XP: {self.player.get_xp()}\n"
+                f"Level: {self.player.get_level()}"
+            )
+        )
+
+
 
     #End Screen
     def setup_end_screen(self) -> None:
+        self.end_frame.grid_rowconfigure(0, weight=1)
+        self.end_frame.grid_columnconfigure(0, weight=1)
+
+        container = tk.Frame(self.end_frame)
+        container.place(relx=0.5, rely=0.5, anchor="center")
+
         label = tk.Label(self.end_frame, text=" GAME OVER ", font=("Arial", 24), fg="red")
         label.pack(pady=20)
 
